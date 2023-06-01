@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani&display=swap');
+
+
+body {
+    background-color: #262628;
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.center-auth {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    width: 35vw;
+    margin-top: 10vh;
+    border-radius: 40px;
+    border-style: groove;
+}
+
+button, .center-auth-button{
+    margin:auto;
+    font-family: 'Rajdhani', sans-serif;
+    background-color: lightgreen;
+    border-radius: 0%;
+    text-decoration: none;
+    padding: 15px 32px;
+    border: none;
+}
+
+button:hover, .center-auth-button:hover {
+    background-color: #fff;
+    color: #262628;
+}
+
+.center-auth-item {
+    text-align: center;
+    margin:auto;
+    width: 400px;
+}
+
+.center-auth-image {
+    margin:auto;
+    width: 100px;
+    height: 100px;
+}
