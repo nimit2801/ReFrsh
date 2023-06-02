@@ -1,0 +1,20 @@
+{
+  "projectId": "647986a45b07d841d978",
+  "projectName": "ReFrsh Chat App",
+  "functions": [
+    {
+      "$id": "6479e1fdf023fa01b108",
+      "name": "Sync Data with User Session and User Chat",
+      "runtime": "node-16.0",
+      "path": "functions/Sync Data with User Session and User Chat",
+      "entrypoint": "build/index.js",
+      "ignore": ["node_modules", ".npm"],
+      "execute": [],
+      "events": [
+        "databases.6479a05b96a60acff24e.collections.6479c7ee0c7c5e254032.documents.*.create"
+      ],
+      "schedule": "",
+      "timeout": 15
+    }
+  ]
+}
