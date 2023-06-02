@@ -1,12 +1,12 @@
 <template>
     <div>
-        <h1>Welcome To Session Dashboard</h1>
-        <h3>Hello! {{ store.session?.userId }}</h3>
+        <h1>Welcome To Session {{ $route.params.id }}</h1>
+        <!-- <h3>Hello! {{ store.session?.userId }}</h3>
         <div class="chat">
             <div v-for="(message, i) in store.chat" :key="i" :message="message">
                 {message}
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

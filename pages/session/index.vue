@@ -2,10 +2,15 @@
     <div>
         <h1>Welcome To Session Dashboard</h1>
         <h3>Hello! {{ store.session?.userId }}</h3>
-        <div class="session-dashboard">
+        <!-- <div class="session-dashboard">
             <button @click="addSession" class="create-session">Create Session</button>
             <div class="session-list">
             </div>
+        </div> -->
+
+        <div class="session-dashboard">
+            <button @click="addSession" class="create-session">Create Session</button>
+            <SessionLinks v-for="(doc, i) in store.chatSessions?.documents" :key="i" :doc="doc" />
         </div>
     </div>
 </template>
@@ -32,8 +37,6 @@ export default {
             if (truty) {
                 console.log("Session Created");
                 await this.store.getChatSession()
-                // Adds the new session to the list
-                window.location.reload()
             }
             else {
                 console.log("Session Not Created");
