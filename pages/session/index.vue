@@ -31,6 +31,9 @@ export default {
             const truty = await this.store.createChatSession()
             if (truty) {
                 console.log("Session Created");
+                await this.store.getChatSession()
+                // Adds the new session to the list
+                window.location.reload()
             }
             else {
                 console.log("Session Not Created");
