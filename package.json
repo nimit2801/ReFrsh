@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "appwrite": "^11.0.0",
+    "nuxt-appwrite": "^1.0.4",
     "pinia": "^2.1.3"
   }
 }

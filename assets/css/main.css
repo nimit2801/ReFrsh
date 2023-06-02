@@ -46,3 +46,7 @@ button:hover, .center-auth-button:hover {
     width: 100px;
     height: 100px;
 }
+
+.session-dashboard {
+    margin: auto;
+}
