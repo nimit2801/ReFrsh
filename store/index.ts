@@ -4,7 +4,7 @@ import { Models, Query, RealtimeResponseEvent } from 'appwrite';
 export const useMainStore = defineStore('main', {
   state: () => ({
     session: null as Models.Session | null,
-    chatSessions: null as Models.Document | null,
+    chatSessions: null as Models.DocumentList<Models.Document> | null,
     chat: null as [RealtimeResponseEvent<unknown>] | null,
   }),
   actions: {
@@ -83,8 +83,26 @@ export const useMainStore = defineStore('main', {
           collectionId,
           userId!!
         );
-        console.log(sessions);
-        this.chatSessions = sessions;
+        // console.log('User Sessions List', sessions.sesssionIds);
+        const sessionCollectionId = '6479c7ee0c7c5e254032';
+        sessions.sessionIds.forEach(async (sessionId: string) => {
+          console.log('Session Id', sessionId);
+        });
+        const chatSessions = await database.listDocuments(
+          databaseId,
+          sessionCollectionId,
+          [Query.equal('createdBy', [userId!!])]
+        );
+        console.log('Chat Sessions', chatSessions.documents);
+        if (chatSessions.documents.length !== 0) {
+          console.log('are you running this');
+
+          this.chatSessions = chatSessions;
+        } else {
+          console.log('Nope');
+        }
+
+        // this.chatSessions = sessions;
       } catch (error) {
         console.log(error);
       }

@@ -47,10 +47,20 @@ export default {
             this.$router.push('/')
         } else {
             await store.getChatSession()
-            console.log(store.session?.userId);
-            console.log("Chat Sessions: ", store.chatSessions?.sessions);
+            console.log("Store Chat Sessions: ", store.chatSessions);
+            if (store.chatSessions?.documents.length !== 0) {
+                let selectParent = document.querySelector(".session-list")
+                store.chatSessions?.documents.forEach((session: any) => {
+                    console.log("Running this li code");
 
-            this.store = store
+                    let li = document.createElement("li")
+                    li.setAttribute("class", "session-item")
+                    li.textContent = session.$id
+                    selectParent?.appendChild(li)
+                });
+            }
+
+            // this.store = store
         }
     }
 }
