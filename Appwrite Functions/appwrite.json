@@ -15,6 +15,18 @@
       ],
       "schedule": "",
       "timeout": 15
+    },
+    {
+      "$id": "647c635a67fe3cf40c85",
+      "name": "User Func",
+      "runtime": "node-16.0",
+      "path": "functions/User Func",
+      "entrypoint": "build/index.js",
+      "ignore": ["node_modules", ".npm"],
+      "execute": [],
+      "events": ["users.*.create"],
+      "schedule": "",
+      "timeout": 15
     }
   ]
 }
