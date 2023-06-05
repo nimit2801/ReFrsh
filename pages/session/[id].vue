@@ -65,7 +65,6 @@ export default {
         },
     },
     async created() {
-        console.log("Process: ", process.browser)
         console.log("Created")
         const store = useMainStore()
         await store.getChat()
