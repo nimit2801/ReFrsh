@@ -1,11 +1,11 @@
 import { set } from 'nuxt/dist/app/compat/capi';
 import { defineStore } from 'pinia';
-import { Models, Query, RealtimeResponseEvent } from 'appwrite';
+import { Models, Query, RealtimeResponseEvent, Client } from 'appwrite';
 export const useMainStore = defineStore('main', {
   state: () => ({
     session: null as Models.Session | null,
     chatSessions: null as Models.DocumentList<Models.Document> | null,
-    chat: null as [RealtimeResponseEvent<unknown>] | null,
+    chat: null as Models.DocumentList<Models.Document> | null,
   }),
   actions: {
     async signup() {
@@ -41,15 +41,22 @@ export const useMainStore = defineStore('main', {
         return true;
       }
     },
-    getChat() {
-      const { client } = useAppwrite();
-      client.subscribe(
-        'databases.6479a05b96a60acff24e.collections.6479a09905d005cea479.documents.6479a4173a3b5e072064',
-        (event) => {
-          console.log(event);
-          this.chat?.push(event);
-        }
-      );
+    async getChat() {
+      const { client, database } = useAppwrite();
+      // const client_ = new Client();
+      // client_
+      //   .setProject('647986a45b07d841d978')
+      //   .setEndpoint('https://cloud.appwrite.io/v1');
+      try {
+        const listChatMessage = await database.listDocuments(
+          '6479a05b96a60acff24e',
+          '6479a09905d005cea479'
+        );
+        this.chat = listChatMessage;
+        console.log('Chats: ', this.chat.documents);
+      } catch (error) {
+        console.log(error);
+      }
     },
     async createChatSession(): Promise<Boolean> {
       const userId = this.session?.userId;

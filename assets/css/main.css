@@ -50,3 +50,13 @@ button:hover, .center-auth-button:hover {
 .session-dashboard {
     margin: auto;
 }
+
+.classy-input {
+    border-radius: 0%;
+    border: none;
+    padding: 15px 32px;
+    border-bottom: 1px solid #fff;
+    background-color: whitesmoke;
+    color: black;
+    font-family: 'Rajdhani', sans-serif;
+}

@@ -6,4 +6,7 @@ export default defineNuxtConfig({
     endpoint: 'https://cloud.appwrite.io/v1',
     project: '647986a45b07d841d978',
   },
+  routeRules: {
+    '/session/**': { ssr: false },
+  },
 });
