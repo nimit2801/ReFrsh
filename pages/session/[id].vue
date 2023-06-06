@@ -6,15 +6,6 @@
             <input type="text" class="classy-input" v-model="text" />
             <button class="classy-button" @click="appwriteSender(text)">Send</button>
         </div>
-        <!-- <button @click="changer">Listener</button>-->
-        <h3>{{ red }}</h3>
-
-        <!-- <h3>Hello! {{ store.session?.userId }}</h3>
-        <div class="chat">
-            <div v-for="(message, i) in store.chat" :key="i" :message="message">
-                {message}
-            </div>
-        </div> -->
     </div>
 </template>
 
@@ -25,14 +16,10 @@ export default {
     data() {
         const store = useMainStore()
         return {
-            store, text: "", red: false
+            store, text: ""
         }
     },
     methods: {
-        changer() {
-            this.red = !this.red
-            console.log("Red: ", this.red);
-        },
         async appwriteSender(text: string) {
             const { database } = useAppwrite()
             const databaseId = '6479a05b96a60acff24e';
@@ -67,7 +54,7 @@ export default {
     async created() {
         console.log("Created")
         const store = useMainStore()
-        await store.getChat()
+        await store.getChatMessages(String(this.$route.params.id))
         const client_ = new Client();
         client_
             .setProject('647986a45b07d841d978')

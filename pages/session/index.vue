@@ -2,44 +2,55 @@
     <div>
         <h1>Welcome To Session Dashboard</h1>
         <h3>Hello! {{ store.session?.userId }}</h3>
-        <!-- <div class="session-dashboard">
-            <button @click="addSession" class="create-session">Create Session</button>
-            <div class="session-list">
-            </div>
-        </div> -->
 
         <div class="session-dashboard">
+            <input placeholder="Session Name" type="text" class="classy-input" v-model="sessionName" />
+            <input placeholder="Password" type="password" class="classy-input" v-model="password" />
             <button @click="addSession" class="create-session">Create Session</button>
-            <SessionLinks v-for="(doc, i) in store.chatSessions?.documents" :key="i" :doc="doc" />
+            <pre v-if="!nameExists">The session name is not available</pre>
+            <div class="docs-list">
+                <SessionLinks v-for="(doc, i) in store.chatSessions?.documents" :key="i" :doc="doc" />
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { useMainStore } from '@/store/index.js'
+import { ref } from 'vue'
 
 export default {
     data() {
         const store = useMainStore()
         return {
-            store
+            store, sessionName: "", password: "", nameExists: true
         }
     },
     methods: {
         async addSession() {
             console.log("Add Session");
             let selectParent = document.querySelector(".session-list")
-            // let li = document.createElement("li")
-            // li.setAttribute("class", "session-item")
-            // li.textContent = "New Session"
-            // selectParent?.appendChild(li)
-            const truty = await this.store.createChatSession()
-            if (truty) {
-                console.log("Session Created");
-                await this.store.getChatSession()
-            }
-            else {
-                console.log("Session Not Created");
+            const sessionName = this.sessionName.trim()
+            const password = this.password.trim()
+
+            // Check name availability
+            const checkNameAvailable = await this.store.checkNameAvailability(sessionName)
+            if (checkNameAvailable) {
+                console.log("is available");
+                this.nameExists = true
+                const truty = await this.store.createChatSession(sessionName, password)
+                if (truty) {
+                    console.log("Session Created");
+                    await this.store.getChatSession()
+                    this.sessionName = ""
+                    this.password = ""
+                }
+                else {
+                    console.log("Session Not Created");
+                }
+            } else {
+                console.log("already taken");
+                this.nameExists = false
             }
         }
     },
@@ -65,8 +76,6 @@ export default {
                     selectParent?.appendChild(li)
                 });
             }
-
-            // this.store = store
         }
     }
 }

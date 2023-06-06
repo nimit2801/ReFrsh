@@ -53,10 +53,20 @@ button:hover, .center-auth-button:hover {
 
 .classy-input {
     border-radius: 0%;
+    margin-right: 2%;
     border: none;
     padding: 15px 32px;
     border-bottom: 1px solid #fff;
     background-color: whitesmoke;
     color: black;
     font-family: 'Rajdhani', sans-serif;
+}
+
+.flex-class{
+    display: flex;
+    flex-direction: row;
+}
+
+.docs-list {
+    margin-top: 5vh;
 }

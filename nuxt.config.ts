@@ -9,4 +9,10 @@ export default defineNuxtConfig({
   routeRules: {
     '/session/**': { ssr: false },
   },
+  runtimeConfig: {
+    apiSecret: process.env.appwriteSecretKey,
+    public: {
+      projectId: '647986a45b07d841d978',
+    },
+  },
 });
