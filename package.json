@@ -1,5 +1,6 @@
 {
-  "name": "nuxt-app",
+  "name": "refrsh",
+  "version": "alpha-0.1",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -10,7 +11,8 @@
   },
   "devDependencies": {
     "@types/node": "^18",
-    "nuxt": "^3.5.2"
+    "nuxt": "^3.5.2",
+    "nuxt-icon": "^0.4.1"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",

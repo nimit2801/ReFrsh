@@ -1,6 +1,12 @@
 import { set } from 'nuxt/dist/app/compat/capi';
 import { defineStore } from 'pinia';
-import { Models, Query, RealtimeResponseEvent, Client } from 'appwrite';
+import {
+  Models,
+  Query,
+  RealtimeResponseEvent,
+  Client,
+  AppwriteException,
+} from 'appwrite';
 export const useMainStore = defineStore('main', {
   state: () => ({
     session: null as Models.Session | null,
@@ -107,8 +113,7 @@ export const useMainStore = defineStore('main', {
       }
     },
 
-    // TODO: Change schema and fetch sessionIds of user from Sessions collection
-    async getChatSession(): Promise<void> {
+    async getChatSessions(): Promise<void> {
       const { database, ID } = useAppwrite();
       const userId = this.session?.userId;
       const databaseId = '6479a05b96a60acff24e';
@@ -139,8 +144,27 @@ export const useMainStore = defineStore('main', {
         }
 
         // this.chatSessions = sessions;
+      } catch (error: AppwriteException | any) {
+        if (error.type === 'document_not_found') {
+          console.log('No sessions found');
+        } else {
+          console.log(error);
+        }
+      }
+    },
+    async checkAccessToChatSession(sessionId: string): Promise<Boolean> {
+      const { database } = useAppwrite();
+      try {
+        const chatSessionDetails = await database.getDocument(
+          '6479a05b96a60acff24e',
+          '6479c7ee0c7c5e254032',
+          sessionId
+        );
+        console.log('Chat Session Details', chatSessionDetails);
+        return true;
       } catch (error) {
         console.log(error);
+        return false;
       }
     },
   },

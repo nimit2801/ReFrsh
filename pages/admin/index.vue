@@ -6,7 +6,6 @@
             <button class="tile-button" @click="ping">Ping</button>
             <button class="tile-button" @click="flushUserChatCollection">Flush User Chat Collection</button>
             <button class="tile-button" @click="appwriteConnect">Appwrite Connect</button>
-            <button class="tile-button" @click="random()">Random</button>
         </div>
     </div>
 </template>
@@ -19,13 +18,8 @@ import ping from '~/server/api/ping';
 
 export default {
     setup() {
-        let resp = ref("asd");
-        const random = () => {
-            const { data } = useFetch('/api/session/create')
-            resp = ref(data);
-        }
         return {
-            resp, random
+            resp: "", random: ""
         }
     },
     data() {
@@ -57,10 +51,10 @@ export default {
         const { account, teams } = useAppwrite()
 
         const session = await account.getSession('current')
-        const prefs = await account.getPrefs()
-        console.log("Prefs: ", prefs);
         console.log("Session: ", session);
         if (account.getSession('current') !== null) {
+            const prefs = await account.getPrefs()
+            console.log("Prefs: ", prefs);
             if (prefs.admin == "true") {
                 console.log("Admin");
                 console.log("Logged In");

@@ -62,6 +62,18 @@ button:hover, .center-auth-button:hover {
     font-family: 'Rajdhani', sans-serif;
 }
 
+.classy-input-message {
+    border-radius: 0%;
+    margin-right: 2%;
+    border: none;
+    width: 80vw;
+    padding: 15px 32px;
+    border-bottom: 1px solid #fff;
+    background-color: whitesmoke;
+    color: black;
+    font-family: 'Rajdhani', sans-serif;
+}
+
 .flex-class{
     display: flex;
     flex-direction: row;
@@ -69,4 +81,20 @@ button:hover, .center-auth-button:hover {
 
 .docs-list {
     margin-top: 5vh;
+}
+
+.sender-box{
+    position: fixed;
+    bottom: 2vh;
+    width: 100%;
+}
+
+.share-button{
+    background-color: #fff;
+    padding: 1.2em;
+}
+
+.share-button-clicked{
+    background-color: lightgreen;
+    padding: 1.2em;
 }

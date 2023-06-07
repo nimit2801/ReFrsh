@@ -11,6 +11,7 @@
             <div class="docs-list">
                 <SessionLinks v-for="(doc, i) in store.chatSessions?.documents" :key="i" :doc="doc" />
             </div>
+            <pre v-if="noSessions">No Session Exists for the user!</pre>
         </div>
     </div>
 </template>
@@ -23,7 +24,7 @@ export default {
     data() {
         const store = useMainStore()
         return {
-            store, sessionName: "", password: "", nameExists: true
+            store, sessionName: "", password: "", nameExists: true, noSessions: false
         }
     },
     methods: {
@@ -41,7 +42,7 @@ export default {
                 const truty = await this.store.createChatSession(sessionName, password)
                 if (truty) {
                     console.log("Session Created");
-                    await this.store.getChatSession()
+                    await this.store.getChatSessions()
                     this.sessionName = ""
                     this.password = ""
                 }
@@ -63,23 +64,19 @@ export default {
 
             this.$router.push('/')
         } else {
-            await store.getChatSession()
-            console.log("Store Chat Sessions: ", store.chatSessions);
-            if (store.chatSessions?.documents.length !== 0) {
-                let selectParent = document.querySelector(".session-list")
-                store.chatSessions?.documents.forEach((session: any) => {
-                    console.log("Running this li code");
+            await store.getChatSessions()
+            if (store.chatSessions?.documents.length !== undefined) {
+                console.log("Store Chat Sessions: ", store.chatSessions);
+                console.log("len: ", store.chatSessions?.documents.length);
 
-                    let li = document.createElement("li")
-                    li.setAttribute("class", "session-item")
-                    li.textContent = session.$id
-                    selectParent?.appendChild(li)
-                });
+                this.noSessions = false
+            } else {
+                console.log("No Sessions");
+                this.noSessions = true
             }
         }
     }
 }
-
 
 </script>
 

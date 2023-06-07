@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
-  modules: ['@pinia/nuxt', 'nuxt-appwrite'],
+  modules: ['@pinia/nuxt', 'nuxt-appwrite', 'nuxt-icon'],
   appwrite: {
     endpoint: 'https://cloud.appwrite.io/v1',
     project: '647986a45b07d841d978',
@@ -12,7 +12,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiSecret: process.env.appwriteSecretKey,
     public: {
-      projectId: '647986a45b07d841d978',
+      projectId: process.env.appwriteProjectId,
+      databaseId: process.env.appwriteDatabaseId,
+      userChatCollectionId: process.env.appwriteUserChatCollectionId,
+      chatCollectionId: process.env.appwriteChatCollectionId,
+      sessionsCollectionId: process.env.appwriteSessionsCollectionId,
     },
   },
 });
