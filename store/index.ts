@@ -65,28 +65,6 @@ export const useMainStore = defineStore('main', {
         console.log(error);
       }
     },
-    async checkNameAvailability(sessionName: string): Promise<Boolean> {
-      const { database } = useAppwrite();
-      const databaseId = '6479a05b96a60acff24e';
-      const sessionsCollectionId = '6479c7ee0c7c5e254032';
-
-      try {
-        const sessionExistsDoc = await database.getDocument(
-          databaseId,
-          sessionsCollectionId,
-          sessionName
-        );
-        console.log(sessionExistsDoc);
-        if (sessionExistsDoc) {
-          return false;
-        } else {
-          return true;
-        }
-      } catch (error) {
-        console.log(error);
-        return true;
-      }
-    },
     async createChatSession(
       sessionName: string,
       password: string
