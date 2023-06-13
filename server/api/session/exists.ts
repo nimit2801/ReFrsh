@@ -27,7 +27,7 @@ export default defineEventHandler(async (event): Promise<createResponse> => {
     console.log(getDoc);
     return {
       success: true,
-      message: 'Hello World',
+      message: 'Session Does exist',
     };
   } else {
     return {

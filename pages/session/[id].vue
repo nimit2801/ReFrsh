@@ -7,15 +7,15 @@
         </Button>
         <Messages v-for="(message, i) in store.chat?.documents" :message="message" :key="i" />
 
-        <div class="sender-box">
+        <form @submit.prevent="appwriteSender(text)" class="sender-box">
             <input type="text" class="classy-input-message" v-model="text" />
-            <button class="classy-button" @click="appwriteSender(text)">Send</button>
-        </div>
-        <div v-if="needAccess">
+            <button class="classy-button">Send</button>
+        </form>
+        <form @submit.prevent="addAccess" v-if="needAccess">
             <br />
             <input type="password" class="classy-input" placeholder="password" v-model="password" />
-            <button @click="addAccess">Submit</button>
-        </div>
+            <button>Submit</button>
+        </form>
     </div>
 </template>
 
@@ -30,6 +30,9 @@ export default {
         }
     },
     methods: {
+        print(text: string) {
+            console.log(text);
+        },
         copyClipBaord() {
             const url = window.location.href
             navigator.clipboard.writeText(url)
@@ -54,7 +57,7 @@ export default {
             const databaseId = '6479a05b96a60acff24e';
             const userChatCollectionId = '6479a09905d005cea479';
             const store = useMainStore()
-            const loggedIn = await store.getSession()
+            const loggedIn = await store.getSession
             if (loggedIn) {
                 console.log("Logged In");
                 console.log("Message Sender Id: ", store.session?.userId);
@@ -83,8 +86,9 @@ export default {
     async created() {
         console.log("Created")
         const store = useMainStore()
+
         // console.log("This Chat Session: ", store.);
-        const loggedIn = await store.getSession()
+        const loggedIn = await store.getSession
         if (!loggedIn) {
             console.log("Not logged in");
         } else {

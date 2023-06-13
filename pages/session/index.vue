@@ -35,7 +35,11 @@ export default {
             const password = this.password.trim()
 
             // Check name availability
-            const checkNameAvailable = await this.store.checkNameAvailability(sessionName)
+            // const checkNameAvailable = await this.store.checkNameAvailability(sessionName)
+            const { data } = await useFetch(`/api/session/exists?sessionId=${sessionName}`)
+            const checkNameAvailable = !data.value?.success;
+            console.log(checkNameAvailable);
+
             if (checkNameAvailable) {
                 console.log("is available");
                 this.nameExists = true
@@ -58,7 +62,7 @@ export default {
     async mounted() {
 
         const store = useMainStore()
-        const loggedIn = await store.getSession()
+        const loggedIn = await store.getSession
         if (!loggedIn) {
             console.log("Not logged in");
 
