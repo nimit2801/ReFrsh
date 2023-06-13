@@ -62,7 +62,7 @@ export default {
     async mounted() {
 
         const store = useMainStore()
-        const loggedIn = await store.getSession()
+        const loggedIn = await store.getSession
         if (!loggedIn) {
             console.log("Not logged in");
 
