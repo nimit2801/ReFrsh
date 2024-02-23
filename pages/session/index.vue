@@ -43,8 +43,8 @@ export default {
             if (checkNameAvailable) {
                 console.log("is available");
                 this.nameExists = true
-                const truty = await this.store.createChatSession(sessionName, password)
-                if (truty) {
+                const truthy = await this.store.createChatSession(sessionName, password)
+                if (truthy) {
                     console.log("Session Created");
                     await this.store.getChatSessions()
                     this.sessionName = ""

@@ -1,9 +1,7 @@
-import { set } from 'nuxt/dist/app/compat/capi';
 import { defineStore } from 'pinia';
 import {
   Models,
   Query,
-  RealtimeResponseEvent,
   Client,
   AppwriteException,
 } from 'appwrite';
@@ -12,6 +10,8 @@ export const useMainStore = defineStore('main', {
     session: null as Models.Session | null,
     chatSessions: null as Models.DocumentList<Models.Document> | null,
     chat: null as Models.DocumentList<Models.Document> | null,
+    // TODO: Edge case if multiple clients open
+    client: Client,
   }),
   getters: {
     async getAccount() {

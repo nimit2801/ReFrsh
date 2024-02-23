@@ -1,10 +1,10 @@
 <template>
     <div>
         <h1>Welcome To Session {{ $route.params.id }}</h1>
-        <Button @click="copyClipBaord" :class="`${copied ? 'share-button-clicked' : 'share-button'}`">
+        <button @click="copyClipBoard" :class="`${copied ? 'share-button-clicked' : 'share-button'}`">
             <Icon :name="`${copied ? 'icon-park-solid:correct' : 'material-symbols:share'}`" />
             Share Link
-        </Button>
+        </button>
         <Messages v-for="(message, i) in store.chat?.documents" :message="message" :key="i" />
 
         <form @submit.prevent="appwriteSender(text)" class="sender-box">
@@ -33,13 +33,31 @@ export default {
         print(text: string) {
             console.log(text);
         },
-        copyClipBaord() {
+        copyClipBoard() {
             const url = window.location.href
             navigator.clipboard.writeText(url)
             this.copied = true
             setTimeout(() => {
                 this.copied = false
             }, 1500);
+        },
+        async loadChats() {
+            await this.store.getChatMessages(String(this.$route.params.id))
+            const client_ = new Client();
+            client_
+                .setProject('647986a45b07d841d978')
+                .setEndpoint('https://cloud.appwrite.io/v1');
+            client_.subscribe(
+                'databases.6479a05b96a60acff24e.collections.6479a09905d005cea479.documents',
+                (event: any) => {
+                    if (event.events.includes('databases.6479a05b96a60acff24e.collections.6479a09905d005cea479.documents.*.create')) {
+                        console.log('Event Emitted: ', event.payload);
+                        this.store.chat?.documents.push(event.payload)
+                    }
+
+                }
+            );
+
         },
         async addAccess() {
             const { data } = await useFetch('/api/session/addAccess', {
@@ -49,7 +67,14 @@ export default {
                     password: this.password,
                     userId: this.store.session?.userId
                 }
-            })
+            });
+
+            if(data) {
+                console.log('data for addAccess: ', data);
+                this.needAccess = false
+                await this.loadChats();
+            }
+
             // data.value?.success ? this.needAccess = false : alert("Wrong Password")
         },
         async appwriteSender(text: string) {
@@ -91,6 +116,13 @@ export default {
         const loggedIn = await store.getSession
         if (!loggedIn) {
             console.log("Not logged in");
+            alert('You are not logged in, please press ok to login and we\'ll create an anonymous account for you');
+            // new login here
+            // TODO: Make a useLogin hook
+            const loggedIn = await store.signup()
+            this.needAccess = true
+            console.log("Logged In: ", loggedIn);
+
         } else {
             console.log("Logged In");
             // Get details about this session
